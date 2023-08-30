@@ -4,40 +4,24 @@ const btn = document.querySelector('.button');
 const catInfo = document.querySelector('.cat-info');
 const breedSelect = document.querySelector('.breed-select');
 
-const url = `https://api.thecatapi.com/v1/breeds`;
+const url = ` https://api.thecatapi.com/v1/images/search?breed_ids=`;
 const api_key =
   'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
-
-let brr = breedSelect.value;
-console.log(brr);
 
 let selectedOption = [];
 
 breedSelect.addEventListener('change', function handleChange(event) {
-  localStorage.setItem('CHOSEN_CAT', event.target.value);
-  selectedOption.push(event.target.value);
-  fetch(getUrl)
-    .then(cat => renderCatBox(cat))
-    .catch(error => console.log(error));
+  const selectedBreed = event.target.value;
+  //localStorage.setItem('CHOSEN_CAT', selectedBreed);
+  selectedOption.push(selectedBreed);
+
+  console.log(selectedOption);
+  console.log(selectedOption[0]);
+  //console.log(renderCatBox(selectedOption[0]));
 });
-
-console.log(selectedOption);
-console.log(selectedOption[0]);
-// let cnnn = '';
-// const chosenCat = localStorage.getItem('CHOSEN_CAT');
-// console.log(chosenCat);
-
-// cnnn = chosenCat;
-// console.log(cnnn);
 
 const getUrl = catName =>
   `live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10`;
-
-// btn.addEventListener('click', () => {
-//   fetch(getUrl)
-//     .then(cat => renderCatBox(cat))
-//     .catch(error => console.log(error));
-// });
 
 fetch(url, {
   headers: {
@@ -51,25 +35,53 @@ fetch(url, {
     return response.json();
   })
   .then(data => {
-    catInfo.append(...data.map(renderCatBox));
+    catInfo.append(...data.map(renderSelect));
   });
 
-function renderCatBox(cat) {
-  console.log(cat);
-  const addCat = `<div class="box__cat"><img
-  class="cat__image"
-  src="${cat.image.url}"
-  alt="${cat.name}"
-/>
-<div class="box__description"><h2>${cat.name}</h2>
-<p>${cat.description}</p>
-<p><h3>Temperament:</h3> ${cat.temperament}</p>
-</div>
-</>
-</div>`;
-  catInfo.insertAdjacentHTML('afterbegin', addCat);
-
+function renderSelect(cat) {
   const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
   breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
-  console.log(addCat);
+
+  function renderCatBox(cat) {
+    //cat.name = selectedOption[0];
+    console.log(cat);
+    const addCat = `<div class="box__cat"><img
+    class="cat__image"
+    src="${cat.image.url}"
+    alt="${cat.name}"
+  />
+  <div class="box__description"><h2>${cat.name}</h2>
+  <p>${cat.description}</p>
+  <p><h3>Temperament:</h3> ${cat.temperament}</p>
+  </div>
+  </>
+  </div>`;
+    catInfo.insertAdjacentHTML('afterbegin', addCat);
+
+    const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
+    breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
+    console.log(addCat);
+  }
+  renderCatBox(cat);
 }
+console.log(selectedOption[0]);
+// function renderCatBox(cat) {
+//   //cat.name = selectedOption[0];
+//   console.log(cat);
+//   const addCat = `<div class="box__cat"><img
+//   class="cat__image"
+//   src="${cat.image.url}"
+//   alt="${cat.name}"
+// />
+// <div class="box__description"><h2>${cat.name}</h2>
+// <p>${cat.description}</p>
+// <p><h3>Temperament:</h3> ${cat.temperament}</p>
+// </div>
+// </>
+// </div>`;
+//   catInfo.insertAdjacentHTML('afterbegin', addCat);
+
+//   const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
+//   breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
+//   console.log(addCat);
+// }
