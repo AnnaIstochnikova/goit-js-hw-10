@@ -8,18 +8,27 @@ const url = `https://api.thecatapi.com/v1/breeds`;
 const api_key =
   'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
 
+let brr = breedSelect.value;
+console.log(brr);
+
+let selectedOption = [];
+
 breedSelect.addEventListener('change', function handleChange(event) {
   localStorage.setItem('CHOSEN_CAT', event.target.value);
+  selectedOption.push(event.target.value);
   fetch(getUrl)
     .then(cat => renderCatBox(cat))
     .catch(error => console.log(error));
 });
-let cnnn = '';
-const chosenCat = localStorage.getItem('CHOSEN_CAT');
-console.log(chosenCat);
 
-cnnn = chosenCat;
-console.log(cnnn);
+console.log(selectedOption);
+console.log(selectedOption[0]);
+// let cnnn = '';
+// const chosenCat = localStorage.getItem('CHOSEN_CAT');
+// console.log(chosenCat);
+
+// cnnn = chosenCat;
+// console.log(cnnn);
 
 const getUrl = catName =>
   `live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10`;

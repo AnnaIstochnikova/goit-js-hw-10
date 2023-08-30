@@ -1,0 +1,13 @@
+/* .cat-info {
+  display: flex;
+} */
+
+.box__cat {
+  display: flex;
+  flex-direction: row;
+}
+
+.box__cat > img {
+  max-width: 500px;
+  margin-right: 40px;
+}
