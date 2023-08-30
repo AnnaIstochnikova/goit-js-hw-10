@@ -15,7 +15,6 @@ let selectedOption = [];
 
 breedSelect.addEventListener('change', function handleChange(event) {
   const selectedBreed = event.target.value;
-  //localStorage.setItem('CHOSEN_CAT', selectedBreed);
   selectedOption.push(selectedBreed);
 
   console.log(selectedOption);
@@ -27,9 +26,7 @@ breedSelect.addEventListener('change', function handleChange(event) {
     .catch(error => console.log(error));
 });
 breedSelect.dispatchEvent(new Event('change'));
-// const getUrl = catName =>
-//   `live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10`;
-//console.log(`${url}beng`);
+
 function fetchCats(catId) {
   return fetch(`${url}${selectedOption[0]}`, {
     headers: {
@@ -43,11 +40,11 @@ function fetchCats(catId) {
       return response.json();
     })
     .then(data => {
-      catInfo.append(...data.map(renderSelect));
+      breedSelect.append(...data.map(renderSelect));
     });
 }
 function renderSelect(cat) {
-  const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
+  const addNameToSelect = `<option value="${cat.id}">${cat.name}</option>`;
   breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
 
   function renderCatBox(cat) {
@@ -66,13 +63,14 @@ function renderSelect(cat) {
   </div>`;
     catInfo.insertAdjacentHTML('afterbegin', addCat);
 
-    const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
-    breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
-    console.log(addCat);
+    // const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
+    // breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
+    // console.log(addCat);
   }
   renderCatBox(cat);
 }
 console.log(selectedOption[0]);
+
 // function renderCatBox(cat) {
 //   //cat.name = selectedOption[0];
 //   console.log(cat);
