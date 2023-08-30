@@ -4,7 +4,7 @@ const btn = document.querySelector('.button');
 const catInfo = document.querySelector('.cat-info');
 const breedSelect = document.querySelector('.breed-select');
 
-const url = ` https://api.thecatapi.com/v1/images/search?breed_ids=`;
+const url = `https://api.thecatapi.com/v1/images/search?breed_ids=`;
 const api_key =
   'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
 
@@ -18,12 +18,13 @@ breedSelect.addEventListener('change', function handleChange(event) {
   console.log(selectedOption);
   console.log(selectedOption[0]);
   //console.log(renderCatBox(selectedOption[0]));
+  //renderSelect();
 });
 
-const getUrl = catName =>
-  `live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10`;
-
-fetch(url, {
+// const getUrl = catName =>
+//   `live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10`;
+//console.log(`${url}beng`);
+fetch(`${url}${selectedOption[0]}`, {
   headers: {
     'x-api-key': api_key,
   },
