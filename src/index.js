@@ -1,8 +1,11 @@
 'use strict';
 
-const btn = document.querySelector('.button');
 const catInfo = document.querySelector('.cat-info');
 const breedSelect = document.querySelector('.breed-select');
+// import SlimSelect from 'slim-select';
+// new SlimSelect({
+//   select: breedSelect,
+// });
 
 const url = `https://api.thecatapi.com/v1/images/search?breed_ids=`;
 const api_key =
@@ -19,26 +22,30 @@ breedSelect.addEventListener('change', function handleChange(event) {
   console.log(selectedOption[0]);
   //console.log(renderCatBox(selectedOption[0]));
   //renderSelect();
+  fetchCats()
+    .then(cats => renderSelect(cats))
+    .catch(error => console.log(error));
 });
-
+breedSelect.dispatchEvent(new Event('change'));
 // const getUrl = catName =>
 //   `live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10`;
 //console.log(`${url}beng`);
-fetch(`${url}${selectedOption[0]}`, {
-  headers: {
-    'x-api-key': api_key,
-  },
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
-    }
-    return response.json();
+function fetchCats(catId) {
+  return fetch(`${url}${selectedOption[0]}`, {
+    headers: {
+      'x-api-key': api_key,
+    },
   })
-  .then(data => {
-    catInfo.append(...data.map(renderSelect));
-  });
-
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      catInfo.append(...data.map(renderSelect));
+    });
+}
 function renderSelect(cat) {
   const addNameToSelect = `<option value="${cat.name}">${cat.name}</option>`;
   breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
