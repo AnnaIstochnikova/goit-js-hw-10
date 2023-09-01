@@ -35,7 +35,6 @@ axios
     loaderAnimation.classList.add('hidden');
     loaderInfo.classList.add('hidden');
     breedSelect.classList.remove('hidden');
-    console.log(data);
     renderSelect(data);
   })
   .catch(error => {
@@ -81,5 +80,19 @@ function renderCatBox(cat) {
   </div>
   </>
   </div>`;
-  catInfo.insertAdjacentHTML('afterbegin', addCat);
+  const makePromise = () => {
+    return new Promise(resolve => {
+      loaderAnimation.classList.remove('hidden'),
+        loaderInfo.classList.remove('hidden');
+      setTimeout(() => resolve(), 1000);
+    });
+  };
+
+  makePromise()
+    .then(() => {
+      catInfo.insertAdjacentHTML('afterbegin', addCat);
+      loaderAnimation.classList.add('hidden');
+      loaderInfo.classList.add('hidden');
+    })
+    .catch(error => console.error(error));
 }
