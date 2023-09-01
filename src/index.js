@@ -1,14 +1,22 @@
 'use strict';
-
 import axios from 'axios';
-//import SlimSelect from 'slim-select';
-
+import SlimSelect from 'slim-select';
+import Notiflix from 'notiflix';
+Notiflix.Notify.init({
+  width: '400px',
+  position: 'center-center',
+  failure: {
+    background: '#913f3f',
+    textColor: '#fff',
+  },
+});
 const options = {};
 const catInfo = document.querySelector('.cat-info');
 const breedSelect = document.querySelector('.breed-select');
-// new SlimSelect({
-//   select: breedSelect,
-// });
+const loaderAnimation = document.querySelector('.loader');
+const loaderInfo = document.querySelector('.loader__text');
+
+breedSelect.classList.add('hidden');
 
 axios.defaults.headers.common['x-api-key'] =
   'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
@@ -18,32 +26,60 @@ axios
     if (response.status === 200) {
       return response.data;
     } else {
-      throw new Error(response.status);
+      Notiflix.Notify.failure(
+        `Oops! Something went wrong! Try reloading the page!`
+      );
     }
   })
   .then(data => {
+    loaderAnimation.classList.add('hidden');
+    loaderInfo.classList.add('hidden');
+    breedSelect.classList.remove('hidden');
     console.log(data);
     renderSelect(data);
   })
   .catch(error => {
-    console.log(error);
+    loaderAnimation.classList.add('hidden');
+    loaderInfo.classList.add('hidden');
+    breedSelect.classList.add('hidden');
+    Notiflix.Notify.failure(
+      `Oops! Something went wrong! Try reloading the page!`
+    );
   });
 
 function renderSelect(cats) {
-  console.log(cats);
   cats.forEach(cat => {
     const addNameToSelect = `<option value="${cat.id}">${cat.name}</option>`;
     breedSelect.insertAdjacentHTML('afterbegin', addNameToSelect);
-    // console.log(cat.name);
   });
 
+  new SlimSelect({
+    settings: {
+      contentLocation: breedSelect,
+    },
+  });
   breedSelect.addEventListener('change', function handleChange(event) {
     const selectedBreed = event.target.value;
-
+    catInfo.innerHTML = '';
     cats.forEach(cat => {
-      if (selectedBreed !== null || selectedBreed === cat.name) {
-        console.log(cat.name);
+      if (selectedBreed !== null && selectedBreed === cat.id) {
+        renderCatBox(cat);
       }
     });
   });
+}
+
+function renderCatBox(cat) {
+  const addCat = `<div class="box__cat"><img
+    class="cat__image"
+    src="${cat.image.url}"
+    alt="${cat.name}"
+  />
+  <div class="box__description"><h2>${cat.name}</h2>
+  <p>${cat.description}</p>
+  <p><h3>Temperament:</h3> ${cat.temperament}</p>
+  </div>
+  </>
+  </div>`;
+  catInfo.insertAdjacentHTML('afterbegin', addCat);
 }
