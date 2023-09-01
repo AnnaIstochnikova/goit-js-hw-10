@@ -18,3 +18,66 @@ body {
 h2 {
   font-size: 2.5rem;
 }
+
+.breed-select {
+  display: flex;
+  cursor: pointer;
+  border-radius: 20px;
+  background-color: rgb(227, 194, 185);
+  text-align: center;
+  font-size: 20px;
+  margin: 50px auto;
+  font-family: 'Montserrat', sans-serif;
+  width: 300px;
+  height: 50px;
+}
+
+.loader {
+  display: flex;
+  margin: 200 auto;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after,
+.loader::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgb(227, 194, 185);
+  width: 15px;
+  height: 15px;
+  transform: translate(150%, 150%);
+  border-radius: 50%;
+}
+.loader::before {
+  left: auto;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  transform: translate(-150%, -150%);
+}
+
+.loader__text {
+  display: flex;
+  justify-content: space-around;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden {
+  display: none;
+}

@@ -13,14 +13,14 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Raleway:wght@700&family=Roboto:wght@400;500;700;900&display=swap"
       rel="stylesheet"
     />
+   
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
   </head>
   <body>
     <select id="breed-select" class="breed-select"></select>
-    <p class="loader">Loading data, please wait...</p>
-    <p class="error">Oops! Something went wrong! Try reloading the page!</p>
+    <div class="loader"></div>
+    <div class="loader__text">Loading data, please wait...</div>
     <div class="cat-info"></div>
-    <button class="button" type="button">Button</button>
-
     <script src="index.js" type="module"></script>
   </body>
 </html>
