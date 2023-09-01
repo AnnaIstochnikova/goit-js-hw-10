@@ -16,8 +16,6 @@ const breedSelect = document.querySelector('.breed-select');
 const loaderAnimation = document.querySelector('.loader');
 const loaderInfo = document.querySelector('.loader__text');
 
-breedSelect.classList.add('hidden');
-
 axios.defaults.headers.common['x-api-key'] =
   'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
 axios
@@ -35,7 +33,7 @@ axios
     loaderAnimation.classList.add('hidden');
     loaderInfo.classList.add('hidden');
     breedSelect.classList.remove('hidden');
-    renderSelect(data);
+    renderSelect(data.reverse());
   })
   .catch(error => {
     loaderAnimation.classList.add('hidden');
@@ -57,6 +55,7 @@ function renderSelect(cats) {
       contentLocation: breedSelect,
     },
   });
+
   breedSelect.addEventListener('change', function handleChange(event) {
     const selectedBreed = event.target.value;
     catInfo.innerHTML = '';
