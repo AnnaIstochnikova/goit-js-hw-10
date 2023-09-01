@@ -59,23 +59,36 @@ function renderSelect(cats) {
   breedSelect.addEventListener('change', function handleChange(event) {
     const selectedBreed = event.target.value;
     catInfo.innerHTML = '';
-    cats.forEach(cat => {
-      if (selectedBreed !== null && selectedBreed === cat.id) {
-        renderCatBox(cat);
-      }
-    });
+    axios
+      .get(
+        `https://api.thecatapi.com/v1/images/search?breed_ids=${selectedBreed}`,
+        options
+      )
+      .then(response => {
+        if (response.status === 200) {
+          return response.data;
+        } else {
+          Notiflix.Notify.failure(
+            `Oops! Something went wrong! Try reloading the page!`
+          );
+        }
+      })
+      .then(cat => {
+        const chosenCat = cat[0];
+        return renderCatBox(chosenCat);
+      });
   });
 }
 
 function renderCatBox(cat) {
   const addCat = `<div class="box__cat"><img
     class="cat__image"
-    src="${cat.image.url}"
-    alt="${cat.name}"
+    src="${cat.url}"
+    alt="${cat.breeds[0].name}"
   />
-  <div class="box__description"><h2>${cat.name}</h2>
-  <p>${cat.description}</p>
-  <p><h3>Temperament:</h3> ${cat.temperament}</p>
+  <div class="box__description"><h2>${cat.breeds[0].name}</h2>
+  <p>${cat.breeds[0].description}</p>
+  <p><h3>Temperament:</h3> ${cat.breeds[0].temperament}</p>
   </div>
   </>
   </div>`;
