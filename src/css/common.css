@@ -3,6 +3,7 @@ body {
 }
 .box__cat {
   display: flex;
+  justify-content: center;
   flex-direction: row;
 }
 
