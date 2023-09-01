@@ -10,14 +10,16 @@ Notiflix.Notify.init({
     textColor: '#fff',
   },
 });
+
+const API_KEY =
+  'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
 const options = {};
 const catInfo = document.querySelector('.cat-info');
 const breedSelect = document.querySelector('.breed-select');
 const loaderAnimation = document.querySelector('.loader');
 const loaderInfo = document.querySelector('.loader__text');
 
-axios.defaults.headers.common['x-api-key'] =
-  'live_aBuxFCpJ1glwoKQiqCgrRj9d4CjKT3MTHnjKCwr34PtLohAh6jObeB2qr0uwjO10';
+axios.defaults.headers.common['x-api-key'] = API_KEY;
 axios
   .get('https://api.thecatapi.com/v1/breeds', options)
   .then(response => {
@@ -88,10 +90,7 @@ function renderCatBox(cat) {
   />
   <div class="box__description"><h2>${cat.breeds[0].name}</h2>
   <p>${cat.breeds[0].description}</p>
-  <p><h3>Temperament:</h3> ${cat.breeds[0].temperament}</p>
-  </div>
-  </>
-  </div>`;
+  <p><h3>Temperament:</h3> ${cat.breeds[0].temperament}</p>`;
   const makePromise = () => {
     return new Promise(resolve => {
       loaderAnimation.classList.remove('hidden'),
